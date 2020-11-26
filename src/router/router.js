@@ -4,14 +4,16 @@ import xinfeng from '../components/xinfeng/xinfeng.vue'
 import shuiping from '../components/shuiping/two.vue'
 import pingtu from '../components/HelloWorld.vue'
 import game from '../components/2048/2048.vue'
+import big from '../components/big/index.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', component: game },
+  { path: '/game', component: game },
   { path: '/shuiping', component: shuiping },
-  { path: '/pingtu', component: pingtu },
+  { path: '/', component: pingtu },
   { path: '/xinfeng', component: xinfeng },
+  { path: '/big', component: big },
 ]
 
 const router =  new VueRouter({

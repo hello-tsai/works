@@ -2,9 +2,13 @@
   <div class="wrapper-wrapper">
     <h3>拼图小游戏</h3>
     <div class="wrapper" ref="wrapperGame" v-if="aaa">
-      <div v-for="(item,index) in list" :key="index" :class="{'item':item === ''}"
-           @click="changeNum(item,index)">{{item}}</div>
+      <div v-for="(item,index) in list" :key="index" :class="[[item === ''? 'item': hard? 'hard':'block']]"
+           @click="changeNum(item,index)"
+           :style="{backgroundPosition: itemPosition(item)}"
+      ></div>
     </div>
+    <button @click="hard = 0">普通级</button>
+    <button @click="hard = 1">变态级</button>
     <button @click="resetGame">重置游戏</button>
     <div class="win-wrapper" @click="resetGame"  v-if="showWin"> 你赢了</div>
   </div>
@@ -22,6 +26,7 @@ export default {
     return {
       showWin: false,
       aaa: 1,
+      hard: 0,
       list: [],
       targetList: [1, 2, 3, 4, 5, 6, 7, 8, ''],
     }
@@ -63,6 +68,18 @@ export default {
       this.aaa = Math.random()
       this.showWin = false
     },
+    itemPosition(item) {
+      if (item !== '') {
+        if (item < 4) {
+          return `-${((item - 1) % 3) * 100}px  0`
+        }
+        if (item < 7) {
+          return `-${((item - 1) % 3) * 100}px  -100px`
+        }
+        return `-${((item - 1) % 3) * 100}px  -200px`
+      }
+      return ''
+    },
     changeNum(item1, index2) {
       const curIndex = this.list[index2]
       const leftIndex = this.list[index2 - 1]
@@ -97,13 +114,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.wrapper-wrapper{
+  margin-left: 50%;
+  transform: translateX(-25%);
+}
   .wrapper{
     display: flex;
     flex-wrap: wrap;
     width: 319px;
-    margin-left: 50%;
-    transform: translateX(-50%);
   }
   .win-wrapper{
     width: 319px;
@@ -124,10 +142,16 @@ export default {
     line-height: 100px;
     font-size: 36px;
     color: red;
-    background-color: pink;
     border: 3px solid green;
   }
+.wrapper>.block{
+  background: url("../../src/assets/pintuImg/222.png") no-repeat;
+
+}
   .wrapper>.item{
     background-color: #fff;
+  }
+.wrapper>.hard{
+    background: url("../../src/assets/pintuImg/111.png") no-repeat;
   }
 </style>
